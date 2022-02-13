@@ -36,7 +36,7 @@ insert into  travel value(2,'2021-09-16','manali','nihal');
 insert into  travel value(3,'2021-09-17','manali','gopal');
 insert into  travel value(4,'2021-09-18','manali','piyush');
 insert into  travel value(5,'2021-09-19','manali','shashi');
-
+select * from travel;
 
 create table DOB (ID int not null unique,Name varchar(20),Birth_Date date);
  insert into DOB value (1,'S_ha%shi','1998-09-15');
@@ -161,10 +161,72 @@ select students_name from school
 where percentage=(select max(percentage) from school);
 
 
+-- task 3
+
+-- 3.1--  Write a query which uses join and let us know the internal processing of the query
+
+select school.students_name, languages.planguages
+from school
+left  join languages on school.rollno=languages.id;
+
+
+-- 3.2 Write a query to calculate the age based on the date of birth value given in the column.
+
+use taskround;
+SELECT name,Birth_Date,TIMESTAMPDIFF(YEAR,Birth_Date , CURDATE()) AS age FROM DOB;
+
+-- 3.3 --Write a query which demonstrates date related functions.[Minimum 15]
+ 
+ select adddate("2022-02-11", interval 10 day);   -- 1 
+ select addtime(" 2022-02-11 09:34:21.000001", "5.000003");  -- 2
+ select curdate();  -- 3
+ select datediff("2021-06-15", "2020-06-15");  -- 4
+ select date_add("2021-09-15", interval 10 day); -- 5
+select date_format("2017-06-15", "%Y"); -- 6
+select date_sub("2017-06-15", interval 10 day); -- 7
+select day("2017-06-15"); -- 8
+select dayofmonth("2017-06-15"); -- 9
+select extract(month from "2022-09-15"); -- 10 
+select from_days(685467);   -- 11
+select hour("2017-06-20 09:34:00"); -- 12  
+select last_day("2017-06-20"); -- 13 
+select localtimestamp(); -- 14 
+select str_to_date("August 10 2017", "%M %d %Y"); -- 15 
+select sec_to_time(1); -- 16 
+
+-- 3.4-- Write a query to check the current running processe
+
+show processlist;
+
+
+-- 3.5 /* Write a query to insert values in a specific table of your choice in which one of the column has unique constrains and if one tries to insert data which is duplicate based on the column having unique constrain then the value gets updated*/
+
+use taskround;
+create table languages(id int auto_increment unique, planguages varchar(20));
+insert into languages(planguages) value ('html');
+insert into languages(planguages) value ('css');
+insert into languages(planguages) value ('java');
+insert into languages(planguages) value ('sql');
+insert into languages(id,planguages) value(4,'sql') on duplicate key update planguages ='mysql';
+select * from languages;
+
+
+
+-- 3.6 -- Write Queries which include inner joins along with subqueries  
+
+select travel.person,school.mobile_no
+from travel
+inner join school on travel.sr_no= school.rollno
+where sr_no=2;
+
+-- 3.8--  Check out for the commands which can help us to trigger dead lock
+
+
+
 -- Task 6
 -- 6.2-- Write a query to search the topic name having $ and _ in it
 
-SELECT *
+select *
 FROM dob
 WHERE name like '%\$%';
 
