@@ -2,8 +2,7 @@ create database TASKROUND;
 USE TASKROUND;
 show databases;
 /* 2. Create MySQL Database of your choice which include 4-5 tables*/ 
-
-
+ 
 create table customer(id int not null,name varchar(50),email varchar(50),payment varchar(30),primary key(id));
 describe customer;
 insert into customer value(1,'shashi','syadav00006@gmail.com',1000);
@@ -43,7 +42,6 @@ create table DOB (ID int not null unique,Name varchar(20),Birth_Date date);
  insert into DOB value (2,'%babl##u','2000-08-16');
  insert into DOB value (3,'mun$na','2001-05-23');
  insert into DOB value (4,'yash123','1996-12-15');
- 
  
  create table department(ep_no int primary key,department_name varchar(30),manager_name varchar(30)); 
 insert into department value(1,'mechanical','shashi');
@@ -221,9 +219,68 @@ where sr_no=2;
 
 -- 3.8--  Check out for the commands which can help us to trigger dead lock
 
+-- task 4
+
+-- 4.2 -- Write a query to demonstrate the use of group by 
+use taskround;
+select count(id),name
+from customer
+group by name;
+
+-- 4.3--Find the second highest marks scored by each student along with the student and subject name [Tables: student,subject,marks]  
+ 
+create table exams(student varchar(20),subjects varchar(20),marks int);
+insert into exams value('shashi','maths',90);
+insert into exams value('poojan','science',85);
+insert into exams value('deepak','biology',70);
+insert into exams value('sonu','english',80);
+insert into exams value('sonu','english',80);
+insert into exams value('poojan','science',85);
+insert into exams value('deepak','biology',70);
+select student,subjects,max(marks) 
+from exams 
+where marks!=(select max(marks) from exams);
+
+-- 4.4-- Write a query to demonstrate the use of  having clause along with aggregate functions.
+select count(id),name
+from customer
+group by name
+having count(id)<=1;
+
+-- 4.5--  Write two queries  which help us to compare and understand the concept of distinct and group by
+select distinct student,subjects,marks from exams;
+
+select student,subjects,marks, count(*) as totalQty 
+from exams
+group by  student,subjects,marks;
+
+-- 4.6-- Write Query which includes union keyword
+
+ select name from dob
+ union
+ select name from customer;
+ 
+ -- 4.7-- Write a single query which includes group by, having,where ,from ,select,union  and order by.
+
+select name from customer
+group by name
+having min(payment)>1000
+union
+select name
+from dob
+where id<=6
+group by name
+order by name;
+
+-- 4.8-- Write a query which captures duplicate records by the of union
+
+ select id from customer
+ union all
+ select id from cuorder;
 
 
--- Task 6
+ 
+/*Task 6*/
 -- 6.2-- Write a query to search the topic name having $ and _ in it
 
 select *
