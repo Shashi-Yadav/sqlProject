@@ -278,8 +278,42 @@ order by name;
  union all
  select id from cuorder;
 
+/* Task 5 */
 
- 
+-- 5.2-- Write a store procedure to calculate the total marks of each student
+create table students(StudentName varchar(20),StudentMarks int);
+insert into students value('shashi',90);
+insert into students value('rishab',80);
+insert into students value('dipan',85); 
+insert into students value('poojan',70);
+insert into students value('gopal',65);
+select * from students;
+delimiter $$
+create procedure sp_totalMarks()
+begin
+select StudentName,SUM(StudentMarks) as TotalMarks from students
+    group by StudentName;
+ end $$
+delimiter ;
+call sp_totalMarks;
+
+-- 5.3--  Write a query  which displays the list of students in ascending order based on there name along with the highest to lowest  marks scored in different subject by each student
+
+SELECT studentName,Studentmarks FROM Students WHERE studentMarks order by studentname asc,studentmarks desc;
+
+
+-- 5.4 -- Add constrains in such a way that if a primary  key realted record is deleted then the correponding record containing the foreign key should be deleted
+
+alter table cuorder
+add constraint fk_customer 
+foreign key(id) references customer(id) on delete cascade ;
+
+-- 5.5-- Add constrains in such away that if a primary  key realted record is delected then the correponding record containing the foreign key should be updated
+
+alter table cuorder
+add constraint fk_customers
+foreign key(id) references customer(id) on update cascade ;
+
 /*Task 6*/
 -- 6.2-- Write a query to search the topic name having $ and _ in it
 
